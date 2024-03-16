@@ -68,7 +68,7 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
+class TestDBStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
@@ -86,3 +86,36 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that save properly saves objects to file.json"""
+        storage = models.storage
+        storage.reload()
+        state_data = {"name": "Texas"}
+        state_inst = State(**state_data)
+        storage.new(state_inst)
+        storage.save()
+        fetched_state = storage.get(State, state_inst.id)
+        fake_state_id = storage.get(State, "fake_id")
+
+        self.assertEqual(state_inst, fetched_state)
+        self.assertEqual(fake_state_id, None)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test that save properly saves objects to file.json"""
+        storage = models.storage
+        storage.reload()
+        state_data = {"name": "Ohio"}
+        state_inst = State(**state_data)
+        storage.new(state_inst)
+        city_data = {"name": "Bucky", "state_id": state_inst.id}
+        city_inst = City(**city_data)
+        storage.new(city_inst)
+        storage.save()
+        num_of_state = storage.count(State)
+        num_of_all = storage.count()
+
+        self.assertEqual(num_of_state, len(storage.all(State)))
+        self.assertEqual(num_of_all, len(storage.all()))
