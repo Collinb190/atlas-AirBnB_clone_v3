@@ -52,7 +52,7 @@ def create_state():
     return jsonify(state.to_dict()), 201
 
 
-@app_views.route('/states/<states_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
     """Update an object"""
     if request.content_type != 'application/json':
