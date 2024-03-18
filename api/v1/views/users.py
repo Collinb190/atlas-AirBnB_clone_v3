@@ -33,7 +33,7 @@ def delete_user(user_id):
         return jsonify({}), 200
     else:
         return abort(404)
-    
+
 
 @app_views.route('/users', methods=['POST'],  strict_slashes=False)
 def create_user():
@@ -49,7 +49,7 @@ def create_user():
         return abort(400, "Missing password")
     user = User(**data)
     user.save()
-    return jsonify(user.to_dict()), 200
+    return jsonify(user.to_dict()), 201
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'],  strict_slashes=False)
