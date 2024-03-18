@@ -57,7 +57,7 @@ def update_user(user_id):
     """Update a user"""
     user = storage.get(User, user_id)
     if user:
-        if not request.get_json():
+        if not request.get_json(silent=True):
             return abort(404, "Not a JSON")
         if request.content_type != 'application/json':
             return abort(400, "Not a JSON")
