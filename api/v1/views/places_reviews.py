@@ -48,7 +48,7 @@ def delete_review(review_id):
 )
 def create_review(place_id):
     """create review objects"""
-    data = request.get_json()
+    data = request.get_json(silent=True)
     if not data:
         abort(400, "Not a JSON")
 
@@ -72,7 +72,7 @@ def create_review(place_id):
 @app_views.route('/reviews/<review_id>', methods=['PUT'], strict_slashes=False)
 def update_review(review_id):
     """update a review object"""
-    data = request.get_json()
+    data = request.get_json(silent=True)
     review = storage.get(Review, review_id)
     ignore_keys = ["id", "user_id", "place_id", "created_at", "updated_at"]
     if not review:
