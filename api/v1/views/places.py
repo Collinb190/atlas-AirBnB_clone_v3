@@ -26,9 +26,11 @@ def get_place(place_id):
         return jsonify(place.to_dict())
     else:
         return abort(404)
-    
 
-@app_views.route('/places/<place_id>', methods=['DELETE'], strict_slashes=False)
+
+@app_views.route(
+        '/places/<place_id>', methods=['DELETE'], strict_slashes=False
+)
 def delete_place(place_id):
     """Delete a place"""
     place = storage.get(Place, place_id)
@@ -38,9 +40,11 @@ def delete_place(place_id):
         return jsonify({}), 200
     else:
         return abort(404)
-    
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'],  strict_slashes=False)
+
+@app_views.route(
+        '/cities/<city_id>/places', methods=['POST'],  strict_slashes=False
+)
 def create_places(city_id):
     """get all place objects of a city"""
     city = storage.get(City, city_id)
