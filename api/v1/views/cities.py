@@ -39,7 +39,9 @@ def delete_city(city_id):
         return abort(404)
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
+@app_views.route(
+        '/states/<state_id>/cities', methods=['POST'], strict_slashes=False
+)
 def create_city(state_id):
     """Create a city based on state id"""
     if request.content_type != 'application/json':
@@ -76,4 +78,3 @@ def update_city(city_id):
         return jsonify(city.to_dict()), 200
     else:
         return abort(404)
-    
