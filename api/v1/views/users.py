@@ -62,8 +62,6 @@ def update_user(user_id):
         if request.content_type != 'application/json':
             return abort(400, "Not a JSON")
         data = request.get_json()
-        if not data:
-            return abort(400)
         ignore_keys = ['id', 'created_at', 'updated_at']
         for key, value in data.items():
             if key not in ignore_keys:
